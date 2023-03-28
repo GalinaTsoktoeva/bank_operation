@@ -16,6 +16,12 @@ def download_data(filename):
     return sort_data
 
 def select_data(data, num):
+    """
+    Function select num string, where "state" = "EXECUTED"
+    :param data: data for select
+    :param num: count string
+    :return: select data
+    """
     count = 0
     new_arr = []
     for str_data in data:
@@ -30,7 +36,11 @@ def select_data(data, num):
 
 
 def refactor_account(array):
-
+    """
+    function hides numbers amount
+    :param array: array for refactor
+    :return: refactor string
+    """
     if array[0] == "Счет":
         str_from = array[1][-4:]
         array[1] = "**" + str_from
@@ -41,6 +51,11 @@ def refactor_account(array):
 
 
 def refactor_amount(operation_amount):
+    """
+    function return amount of money and currency
+    :param operation_amount: data obout operation amount
+    :return: string
+    """
     res = operation_amount["amount"] + " " + operation_amount["currency"]['name']
     return res
 

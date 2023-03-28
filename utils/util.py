@@ -15,6 +15,19 @@ def download_data(filename):
 
     return sort_data
 
+def select_data(data, num):
+    count = 0
+    new_arr = []
+    for str_data in data:
+        if str_data["state"].lower() == "EXECUTED".lower():
+            new_arr.append(str_data)
+            count += 1
+
+            if count == num:
+                return new_arr
+                break
+
+
 
 def refactor_account(array):
 
@@ -34,25 +47,24 @@ def refactor_amount(operation_amount):
 
 def refactor_string(text):
     result = ""
-    if text["state"].lower() == "EXECUTED".lower():
-        # 14.10.2018 Перевод организации
-        # Visa Platinum 7000 79** **** 6361 -> Счет **9638
-        # 82771.72 руб.
-        date_mod = datetime.strptime(text['date'], '%Y-%m-%dT%H:%M:%S.%f')
-        date = datetime.strftime(date_mod, '%d.%m.%Y')
 
-        result += date + " " + text["description"] + "\n"
-        if "from" in text:
-            account_from = refactor_account(text["from"].split())
-            result += account_from + " -> "
+    # 14.10.2018 Перевод организации
+    # Visa Platinum 7000 79** **** 6361 -> Счет **9638
+    # 82771.72 руб.
+    date_mod = datetime.strptime(text['date'], '%Y-%m-%dT%H:%M:%S.%f')
+    date = datetime.strftime(date_mod, '%d.%m.%Y')
 
-        account_to = refactor_account(text["to"].split())
-        result += account_to
+    result += date + " " + text["description"] + "\n"
+    if "from" in text:
+        account_from = refactor_account(text["from"].split())
+        result += account_from + " -> "
 
-        res_amount = refactor_amount(text["operationAmount"])
-        result += "\n" + res_amount
+    account_to = refactor_account(text["to"].split())
+    result += account_to
 
-        print(result)
-        return result
+    res_amount = refactor_amount(text["operationAmount"])
+    result += "\n" + res_amount
+
+    return result
 
 

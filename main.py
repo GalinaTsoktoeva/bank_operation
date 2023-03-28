@@ -1,29 +1,25 @@
-from utils.util import download_data, refactor_string
-from datetime import datetime
+from utils.util import download_data, refactor_string, select_data
+
 
 def main():
-    count_str = 0
-    result = ""
+    count_str = 5
+
     filename = "utils/operations.json"
     data = download_data(filename)
+    data_select = select_data(data, count_str)
 
-    for item in range(len(data)):
+    for item in data_select:
 
         try:
-            str = refactor_string(data[item])
-            if str:
+            str_amount = refactor_string(item)
+            if str_amount:
+                print(str_amount)
                 print()
-                str = ""
-
-            if count_str == 5:
-                break
-            count_str += 1
+                str_amount = ""
         except:
             pass
 
 
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     main()
 
